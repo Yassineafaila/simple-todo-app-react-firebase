@@ -3,20 +3,22 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../Ui/Input";
 import Button from "../Ui/button";
+import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../../context/AuthContext";
 import { CgMail } from "react-icons/cg";
 import { RiLockPasswordLine } from "react-icons/ri";
-import {HiOutlineUser} from "react-icons/hi"
+import { HiOutlineUser } from "react-icons/hi";
+import "./SignUp.css";
 function SignUp() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,setError]=useState("")
-  const { register } = useAuth()
-  const navigate=useNavigate()
+  const [error, setError] = useState("");
+  const { register } = useAuth();
+  const navigate = useNavigate();
   const singUp = () => {
     if (fullName === "" || email === "" || password === "") {
-      setError("please fill all the field");
+      setError("please fill this the field");
       return;
     }
     if (password.length <= 6) {
@@ -24,49 +26,74 @@ function SignUp() {
       return;
     }
     register(fullName, email, password);
-    navigate("/sign-in")
-  }
+    navigate("/sign-in");
+  };
   return (
-    <main>
-      <div>
-        {error && <p>{error}</p>}
-        <div>
+    <main className="sign-up container mx-auto w-100 px-2 position-relative">
+      <section className="container mx-auto d-flex justify-content-center flex-column my-4 mx-auto py-5 px-3 rounded shadow-lg gap-4">
+        <h2 className="fw-bolder text-center">Sign Up</h2>
+
+        <Input
+          type="text"
+          name="fullName"
+          placeholder="Enter your full name"
+          className={"border-0 "}
+          error={error}
+          value={fullName}
+          HandlerChange={(e) => setFullName(e.target.value)}
+        >
           <HiOutlineUser />
-          <Input
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            value={fullName}
-            HandlerChange={(e) => setFullName(e.target.value)}
-          />
-        </div>
-        <div>
+        </Input>
+
+        <Input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          className={"border-0 "}
+          error={error}
+          value={email}
+          HandlerChange={(e) => setEmail(e.target.value)}
+        >
           <CgMail />
-          <Input
-            type="email"
-            name="email"
-            placeholder="email..."
-            value={email}
-            HandlerChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
+        </Input>
+
+        <Input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          className={"border-0 "}
+          error={error}
+          value={password}
+          HandlerChange={(e) => setPassword(e.target.value)}
+        >
           <RiLockPasswordLine />
-          <Input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={password}
-            HandlerChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <Button type={"submit"} HandlerClick={singUp}>
+        </Input>
+
+        <Button
+          type={"submit"}
+          className={
+            "border-0 bg-primary py-2 px-3 rounded shadow-sm text-white fw-medium"
+          }
+          HandlerClick={singUp}
+        >
           Sign Up
         </Button>
-        <p>
-          Already have an account <Link to="/sign-in">Sign In</Link>
+        <Button
+          type={"button"}
+          className={
+            "d-flex align-items-center justify-content-center gap-2 py-2 px-3 fw-medium rounded border-0  bg-dark text-white "
+          }
+        >
+          <FcGoogle />
+          Sign Up With Google
+        </Button>
+        <p className="text-center fw-light">
+          Already have an account {"?"}
+          <Link className="text-decoration-none fw-medium" to="/sign-in">
+            Sign In
+          </Link>
         </p>
-      </div>
+      </section>
     </main>
   );
 }
