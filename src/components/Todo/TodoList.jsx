@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Ui/button";
 import { useTodo } from "../../context/TodosContext";
-import { useAuth } from "../../context/AuthContext";
 
 function TodoList({ setId }) {
   const {
@@ -38,35 +37,40 @@ function TodoList({ setId }) {
     getAllTodos();
   }, []);
   return (
-    <>
-      <div>
-        {isLoading ? (
-          "loading..."
-        ) : (
-          <div>
-            {todos?.map((todo, index) => {
-              return (
-                <div key={index}>
-                  <p>{todo.taskName}</p>
+    <section className="todo-list d-flex px-2 justify-content-md-center justify-content-lg-center">
+      {isLoading ? (
+        "loading..."
+      ) : (
+        <div className="w-100 list-container">
+          {todos?.map((todo, index) => {
+            return (
+              <div
+                key={index}
+                className="d-flex align-items-center w-100 my-2 justify-content-between gap-4"
+              >
+                <p className="m-0 fw-normal">{todo.taskName}</p>
+                <div>
                   <Button
                     type="button"
+                    className={"border-0 btn btn-success me-2 fw-medium"}
                     HandlerClick={() => getTaskForUpdating(todo.id)}
                   >
                     Update
                   </Button>
                   <Button
                     type="button"
+                    className={"border-0 btn btn-danger fw-medium"}
                     HandlerClick={() => deleteTask(todo.id)}
                   >
                     Delete
                   </Button>
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 }
 

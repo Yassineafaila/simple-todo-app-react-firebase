@@ -40,18 +40,25 @@ function TodoFrom({ id, setId }) {
   };
 
   return (
-    <div>
+    <section className="d-flex justify-content-center gap-2 my-4 align-items-center">
       <Input
         type="text"
-        placeholder={`${id? "new task name to update":"add task"}`}
+        placeholder={`${id ? "new task name to update" : "add task"}`}
         value={taskName}
-        HandlerChange={(e)=>setTaskName(e.target.value)}
+        className="border-0 w-100 "
+        HandlerChange={(e) => setTaskName(e.target.value)}
         error={errorForm}
       />
-      <Button type="button" HandlerClick={addTask}>
+      <Button
+        type="button"
+        className={
+          "border-0 btn bg-primary py-2 px-2 rounded shadow-sm text-white fw-medium"
+        }
+        HandlerClick={addTask}
+      >
         add task
       </Button>
-    </div>
+    </section>
   );
 }
 
