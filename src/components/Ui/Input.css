@@ -1,0 +1,19 @@
+.input-container div.error {
+  border: 1px solid #e61e1e !important;
+}
+.input-container input {
+  outline: none !important;
+  background-color: transparent !important;
+}
+.input-container .error {
+  color: #e61e1e !important;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 0.875rem !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
