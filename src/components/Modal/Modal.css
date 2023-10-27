@@ -25,4 +25,11 @@
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     z-index: 99999;
+    width: 300px;
+    height: 200px;
+}
+.modal-box button{
+    position: absolute;
+    top: -26px;
+    right: 0;
 }
