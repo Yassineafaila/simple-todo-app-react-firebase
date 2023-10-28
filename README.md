@@ -1,8 +1,24 @@
-# React + Vite
+# Todo-List-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Todo List app with authentication using the firebase
 
-Currently, two official plugins are available:
+## Table of contents
+* [General info](https://react.dev/)
+* [Technologies](#technologies)
+* [Setup](#setup)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## General info
+This is a simple project to test my abilities for using react+vite and firebase
+	
+## Technologies
+Project is created with:
+* [react.js](https://react.dev)
+* [bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction)
+* [react-icons](https://react-icons.github.io/react-icons)	
+* [firebase](https://firebase.google.com)	
+## Setup
+To run this project, install it locally using npm:
+
+```
+$ npm install
+$ npm run dev
