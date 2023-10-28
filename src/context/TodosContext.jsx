@@ -34,7 +34,6 @@ function reducer(state, action) {
       return {
         ...state,
         todo: action.payload,
-        message: `Want to update : ${state.todo.taskName}`,
       };
     case "todo/added":
       return { ...state, message: "the task Added successfully!" };
@@ -86,7 +85,8 @@ function TodoProvider({ children }) {
     try {
       const todoDoc = doc(todosCollectionRef, id);
       const docSnap = await getDoc(todoDoc);
-      dispatch({ type: "todo/loaded", payload: docSnap.data() });
+      const todoUpdate = docSnap.data();
+      dispatch({ type: "todo/loaded", payload: todoUpdate });
       console.log("getting data for a single task successfully!");
     } catch (error) {
       dispatch({ type: "rejected", payload: "Error fetching todo" });

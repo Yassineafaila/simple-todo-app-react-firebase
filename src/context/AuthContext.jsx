@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -5,11 +6,21 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { auth, db,googleProvider } from "../config/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { auth, db, googleProvider, storage } from "../config/firebase";
+import {ref,uploadBytes} from "firebase/storage"
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 const AuthContext = createContext();
 const initialState = {
   user: null,
+  userDetails:null,
   isAuthenticated: false,
   message: "",
 };
@@ -23,7 +34,12 @@ function reducer(state, action) {
         message: "user Logged in successfully",
       };
     case "login/google":
-      return {...state,user:action.payload,isAuthenticated:true,message:"sign in with google successfully"}
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true,
+        message: "sign in with google successfully",
+      };
     case "register":
       return {
         ...state,
@@ -31,14 +47,16 @@ function reducer(state, action) {
         isAuthenticated: true,
         message: "you have been successfully register",
       };
+    case "user/details":
+      return { ...state, userDetails: action.payload };
     case "logout":
-      return { ...state, user: null, isAuthenticated: false ,message:""};
+      return { ...state, user: null, isAuthenticated: false, message: "" };
     case "rejected":
       return { ...state, message: action.payload };
   }
 }
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated, message }, dispatch] = useReducer(
+  const [{ user, userDetails,isAuthenticated, message }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -48,8 +66,8 @@ function AuthProvider({ children }) {
         // alert("Logged in successfully");
         auth.onAuthStateChanged((user) => {
           dispatch({ type: "login", payload: user });
-        })
-        
+        });
+
         return true; // Return a promise that resolves to true
       })
       .catch((err) => {
@@ -98,16 +116,51 @@ function AuthProvider({ children }) {
     const user = await signOut(auth);
     dispatch({ type: "logout" });
   }
+  async function getUser(id) {
+    try {
+      const usersCollection = collection(db, "users");
+      const q = query(usersCollection, where("userId", "==", `${id}`));
+      const querySnapShot = await getDocs(q);
+
+      let docId = null;
+
+      querySnapShot.forEach((doc) => {
+        dispatch({ type: "user/details", payload: doc.data() });
+        docId = doc.id;
+      });
+
+      return docId;
+    } catch (e) {
+      console.log("Error", e);
+      return null;
+    }
+  }
+  async function updateProfile(fname, lname, address,fileName,id) {
+    try {
+      const docId = await getUser(id);
+      const docRef = doc(db, "users", docId);
+      await updateDoc(docRef, { first_name: fname, last_name: lname, address });
+      const filesFolderRef = ref(storage, `users/${user.uid}/${fileName}`)
+      if (!fileName) return;
+      await uploadBytes(filesFolderRef, fileName);
+      
+    } catch (e) {
+      console.log("Error", e);
+    }
+  }
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
+        userDetails,
         message,
         login,
         register,
         logout,
         signInWithGoogleAuth,
+        updateProfile,
+        getUser,
       }}
     >
       {children}
