@@ -52,10 +52,11 @@ function SignIn() {
       console.error(e);
     }
   };
+  //
   return (
     <>
       {message && (
-        <Modal>
+        <Modal message={message}>
           <p>{message}</p>
         </Modal>
       )}
@@ -68,7 +69,7 @@ function SignIn() {
             name="email"
             placeholder="Enter your email"
             value={email}
-            className={"border-0 "}
+            className={"border-0 w-100 "}
             error={error.email}
             HandlerChange={(e) => setEmail(e.target.value)}
           >
@@ -79,7 +80,7 @@ function SignIn() {
             type="password"
             name="password"
             placeholder="Enter your password"
-            className="border-0 "
+            className="border-0 w-100 "
             value={password}
             error={error.password}
             HandlerChange={(e) => setPassword(e.target.value)}

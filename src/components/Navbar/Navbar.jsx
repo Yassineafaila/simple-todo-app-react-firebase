@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../Ui/button";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";

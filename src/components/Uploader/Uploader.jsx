@@ -3,9 +3,7 @@ import "./Uploader.css";
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
 
-function Uploader() {
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState("No selected file");
+function Uploader({ image, setImage, fileName, setFileName }) {
   return (
     <>
       <form
@@ -36,7 +34,6 @@ function Uploader() {
       <section className="upload-row my-2 d-flex justify-content-between align-items-center py-3 px-4">
         <AiFillFileImage color="#1475cf" />
         <span className="upload-content d-flex align-items-center">
-          
           {fileName}-
           <MdDelete
             onClick={() => {

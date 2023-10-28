@@ -10,7 +10,6 @@ function Todo() {
   const {
     message,
   } = useTodo();
-  console.log(message)
   return (
     <main className="container mx-auto  position-relative d-flex  justify-content-center flex-column">
       {message == "" ? null : (

@@ -1,3 +1,10 @@
 main{
-    min-height: 100vh;
+    min-height: calc(100vh - 200px) !important;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+@media screen and (max-width:767px){
+    main div h1{
+        font-size: 1.5rem;
+    }
 }

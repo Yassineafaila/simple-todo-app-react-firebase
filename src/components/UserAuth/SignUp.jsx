@@ -14,7 +14,7 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { register } = useAuth();
+  const { register,signInWithGoogleAuth } = useAuth();
   const navigate = useNavigate();
   const singUp = () => {
     if (fullName === "" || email === "" || password === "") {
@@ -28,6 +28,15 @@ function SignUp() {
     register(fullName, email, password);
     navigate("/sign-in");
   };
+  const handleSignUpWithGoogle = async () => {
+    try {
+      await signInWithGoogleAuth()
+      console.log("successfully sign up with google")
+    } catch (e) {
+      console.log("Error",e)
+    }
+    navigate("/",{replace:true})
+  }
   return (
     <main className="sign-up container mx-auto w-100 px-2 position-relative">
       <section className="container mx-auto d-flex justify-content-center flex-column my-4 mx-auto py-5 px-3 rounded shadow-lg gap-4">
@@ -37,7 +46,7 @@ function SignUp() {
           type="text"
           name="fullName"
           placeholder="Enter your full name"
-          className={"border-0 "}
+          className={"border-0 w-100 "}
           error={error}
           value={fullName}
           HandlerChange={(e) => setFullName(e.target.value)}
@@ -49,7 +58,7 @@ function SignUp() {
           type="email"
           name="email"
           placeholder="Enter your email"
-          className={"border-0 "}
+          className={"border-0 w-100 "}
           error={error}
           value={email}
           HandlerChange={(e) => setEmail(e.target.value)}
@@ -61,7 +70,7 @@ function SignUp() {
           type="password"
           name="password"
           placeholder="Enter your password"
-          className={"border-0 "}
+          className={"border-0 w-100 "}
           error={error}
           value={password}
           HandlerChange={(e) => setPassword(e.target.value)}
@@ -78,7 +87,7 @@ function SignUp() {
         >
           Sign Up
         </Button>
-        <Button
+        <Button  HandlerClick={handleSignUpWithGoogle}
           type={"button"}
           className={
             "d-flex align-items-center justify-content-center gap-2 py-2 px-3 fw-medium rounded border-0  bg-dark text-white "
